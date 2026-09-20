@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plantão Desportivo - Vasco da Gama</title>
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #111;
+            font-family: 'Arial', sans-serif;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        /* ESTILOS COMPARTILHADOS PARA BOTÕES */
+        button {
+            padding: 20px 40px;
+            font-size: 1.5em;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: 0.3s;
+            text-transform: uppercase;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+        }
+
+        /* TELAS (Todas começam ocultas, exceto a inicial) */
+        #tela-inicial, #tela-professor, #tela-final {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        #tela-inicial {
+            display: flex; /* Apenas esta aparece primeiro */
+        }
+
+        /* CORES DOS BOTÕES ESPECÍFICOS */
+        #btn-iniciar { background-color: #000; color: #fff; border: 2px solid #fff; }
+        #btn-iniciar:hover { background-color: #333; }
+        
+        .btn-opcao {
+            background-color: #0055ff;
+            color: #fff;
+            border: 2px solid #fff;
+            margin: 15px;
+            width: 80%;
+            max-width: 600px;
+            font-size: 1.3em;
+        }
+        .btn-opcao:hover { background-color: #0033cc; }
+
+        #btn-voltar { background-color: #333; color: #fff; border: none; margin-top: 40px; font-size: 1.2em; }
+        
+        #btn-prosseguir {
+            display: none; /* Só aparece quando a música pausa */
+            background-color: #ffeb3b;
+            color: #000;
+            border: none;
+            margin-top: 30px;
+            z-index: 20;
+            animation: pulsar 1s infinite alternate;
+        }
+
+        /* TELA DA TRANSMISSÃO DA TV */
+        #transmissao-tv {
+            display: none; 
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #000000 50%, #ffffff 50%);
+            position: relative;
+            animation: ligarTV 1s ease-out;
+        }
+
+        @keyframes ligarTV {
+            0% { transform: scale(1, 0.001); filter: brightness(10); }
+            50% { transform: scale(1, 0.001); filter: brightness(10); }
+            100% { transform: scale(1, 1); filter: brightness(1); }
+        }
+
+        #escudo {
+            width: 200px;
+            filter: drop-shadow(0px 0px 20px rgba(0,0,0,0.8));
+            animation: pulsar 2s infinite alternate;
+        }
+
+        @keyframes pulsar {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+
+        .faixa-campeao {
+            background-color: #cc0000;
+            color: white;
+            padding: 15px 40px;
+            font-size: 2em;
+            font-weight: bold;
+            text-transform: uppercase;
+            border: 4px solid #fff;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0px 5px 15px rgba(0,0,0,0.7);
+            z-index: 10;
+        }
+
+        .aviso-fe {
+            font-size: 0.7em;
+            color: #ffeb3b;
+            margin-top: 5px;
+            font-style: italic;
+            font-weight: normal;
+        }
+
+        .rodape-noticias {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background-color: #000;
+            color: #fff;
+            padding: 10px 0;
+            font-size: 1.5em;
+            border-top: 3px solid #cc0000;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .hino {
+            display: inline-block;
+            padding-left: 100%;
+        }
+
+        .hino-animado {
+            animation: correrLetreiro 24s linear forwards;
+        }
+
+        @keyframes correrLetreiro {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* TEXTO "NO AGUARDO!" */
+        .texto-gigante {
+            font-size: 6em;
+            color: #ffeb3b;
+            text-shadow: 5px 5px 15px rgba(0,0,0,0.8);
+            margin: 0;
+            animation: pulsar 0.5s infinite alternate;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TELA 1: INÍCIO -->
+    <div id="tela-inicial">
+        <button id="btn-iniciar">CLIQUE E VEJA O FUTURO</button>
+    </div>
+
+    <!-- TELA 2: TV COM HINO -->
+    <div id="transmissao-tv">
+        <img id="escudo" src="escudo.png" alt="Escudo do Vasco">
+        
+        <div class="faixa-campeao">
+            CAMPEÃO DA COPA DO BRASIL E DA SUL-AMERICANA
+            <div class="aviso-fe">(se Deus quiser)</div>
+        </div>
+
+        <!-- Botão escondido que aparece após a música -->
+        <button id="btn-prosseguir">PROSSEGUIR</button>
+
+        <audio id="audio-hino" src="hino.mp3" preload="auto"></audio>
+
+        <div class="rodape-noticias">
+            <span class="hino" id="letreiro">🎵 VAMOS TODOS CANTAR DE CORAÇÃO... A CRUZ DE MALTA É O MEU PENDÃO... TU TENS O NOME DO HEROICO PORTUGUÊS... VASCO DA GAMA, A TUA FAMA ASSIM SE FEZ! 🎵</span>
+        </div>
+    </div>
+
+    <!-- TELA 3: ESCOLHA DO PROFESSOR -->
+    <div id="tela-professor">
+        <h1 style="font-size: 3em; margin-bottom: 40px;">E AGORA, PROFESSOR?</h1>
+        <button class="btn-opcao" onclick="irParaFinal()">Opção 1: Dar Nota 10</button>
+        <button class="btn-opcao" onclick="irParaFinal()">Opção 2: Dar a nota de √25 × (sen²x + cos²x) + (100 ÷ 20) = 10</button>
+    </div>
+
+    <!-- TELA 4: FINAL NO AGUARDO -->
+    <div id="tela-final">
+        <h1 class="texto-gigante">NO AGUARDO!</h1>
+        <button id="btn-voltar">VOLTAR PARA O INÍCIO</button>
+    </div>
+
+    <script>
+        // Mapeamento das telas e elementos
+        const telaInicial = document.getElementById('tela-inicial');
+        const transmissaoTV = document.getElementById('transmissao-tv');
+        const telaProfessor = document.getElementById('tela-professor');
+        const telaFinal = document.getElementById('tela-final');
+        
+        const audioHino = document.getElementById('audio-hino');
+        const letreiro = document.getElementById('letreiro');
+        const btnProsseguir = document.getElementById('btn-prosseguir');
+        const btnVoltar = document.getElementById('btn-voltar');
+
+        // Tempos do áudio
+        const tempoDeCorte = 30.0; 
+        const tempoInicioVoz = 6.0; 
+
+        // 1. INICIAR TRANSMISSÃO
+        document.getElementById('btn-iniciar').addEventListener('click', () => {
+            telaInicial.style.display = 'none';
+            transmissaoTV.style.display = 'flex';
+            
+            audioHino.currentTime = 0; 
+            audioHino.play().catch(e => console.log("Erro de áudio:", e));
+
+            audioHino.addEventListener('timeupdate', vigiarAudio);
+        });
+
+        // 2. VIGIAR O TEMPO DO ÁUDIO
+        function vigiarAudio() {
+            // Inicia o letreiro
+            if (audioHino.currentTime >= tempoInicioVoz && !letreiro.classList.contains('hino-animado')) {
+                letreiro.classList.add('hino-animado');
+            }
+
+            // Pausa a música e mostra botão "Prosseguir"
+            if (audioHino.currentTime >= tempoDeCorte) {
+                audioHino.pause();
+                btnProsseguir.style.display = 'block';
+                // Remove o evento para não ficar rodando em loop
+                audioHino.removeEventListener('timeupdate', vigiarAudio);
+            }
+        }
+
+        // 3. IR PARA TELA DO PROFESSOR
+        btnProsseguir.addEventListener('click', () => {
+            transmissaoTV.style.display = 'none';
+            telaProfessor.style.display = 'flex';
+        });
+
+        // 4. IR PARA TELA FINAL (Essa função é chamada nos cliques dos botões de opções do professor)
+        function irParaFinal() {
+            telaProfessor.style.display = 'none';
+            telaFinal.style.display = 'flex';
+        }
+
+        // 5. VOLTAR AO INÍCIO (Resetar tudo)
+        btnVoltar.addEventListener('click', () => {
+            telaFinal.style.display = 'none';
+            telaInicial.style.display = 'flex';
+            
+            // Reseta botões e animações para poder rodar de novo se quiser
+            btnProsseguir.style.display = 'none';
+            letreiro.classList.remove('hino-animado');
+            audioHino.currentTime = 0;
+        });
+    </script>
+
+</body>
+</html>
