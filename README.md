@@ -1,4 +1,4 @@
-# 💢 Plantão Esportivo - Vasco da Gama (Trabalho Avaliativo)
+8# 💢 Plantão Esportivo - Vasco da Gama (Trabalho Avaliativo)
 
 [![GitHub Pages](https://img.shields.io/badge/Deploy-GitHub%20Pages-success?style=for-the-badge&logo=github)](https://vitorhugoct24-wq.github.io/Atividade-19_09/Trabalho%20Avaliativo%20-%2019_09/index.html)
 
@@ -21,4 +21,4 @@ O projeto está hospedado no GitHub Pages e não requer instalação.
 **[Clique aqui para visualizar o projeto ao vivo](https://vitorhugoct24-wq.github.io/Atividade-19_09/Trabalho%20Avaliativo%20-%2019_09/index.html)**
 
 ## 👨‍💻 Autores
-**Vítor Hugo de Oliveira Fonseca / Gemini.**
+**Vítor Hugo de Oliveira Fonseca/GEMINI**
